@@ -1,0 +1,615 @@
+#!/bin/bash
+
+# Fungsi untuk mendapatkan timestamp
+get_timestamp() {
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')]"
+}
+
+# Fungsi untuk menampilkan pesan peringatan
+show_warning() {
+    echo -e "\e[1;31m[!] PERINGATAN: $1\e[0m"
+    echo "$(get_timestamp) WARNING: $1" >> installer.log
+}
+
+# Fungsi untuk menampilkan pesan informasi
+show_info() {
+    echo -e "\e[1;34m[i] INFO: $1\e[0m"
+    echo "$(get_timestamp) INFO: $1" >> installer.log
+}
+
+# Fungsi untuk menampilkan pesan sukses
+show_success() {
+    echo -e "\e[1;32m[✓] SUKSES: $1\e[0m"
+    echo "$(get_timestamp) SUCCESS: $1" >> installer.log
+}
+
+# Fungsi untuk mengecek versi tool
+check_version() {
+    echo -e "\n\e[1;36m╔════════════════════════════════════════╗"
+    echo -e "║            CEK VERSI TOOL             ║"
+    echo -e "╚════════════════════════════════════════╝\e[0m"
+    
+    case $1 in
+        "Evil-Droid")
+            if [ -d "evil-droid" ]; then
+                cd evil-droid
+                current_ver=$(git log -1 --format=%cd --date=short)
+                latest_ver=$(git ls-remote --heads https://github.com/M4sc3r4n0/evil-droid.git | grep "refs/heads/master" | cut -f 1)
+                cd ..
+                show_info "Evil-Droid"
+                echo -e "  ├─ Versi saat ini : $current_ver"
+                echo -e "  └─ Versi terbaru  : $latest_ver"
+            else
+                show_warning "Tool Evil-Droid belum terinstall"
+            fi
+            ;;
+        "Metasploit")
+            if command -v msfconsole >/dev/null 2>&1; then
+                current_ver=$(msfconsole -v | head -n 1)
+                show_info "Metasploit Framework"
+                echo -e "  └─ Versi saat ini : $current_ver"
+            else
+                show_warning "Tool Metasploit belum terinstall"
+            fi
+            ;;
+        "Sqlmap")
+            if [ -d "sqlmap" ]; then
+                cd sqlmap
+                current_ver=$(git log -1 --pretty=format:"%h - %ad" --date=short)
+                latest_ver=$(git ls-remote --heads https://github.com/sqlmapproject/sqlmap.git | grep "refs/heads/master" | cut -f 1)
+                cd ..
+                show_info "Sqlmap"
+                echo -e "  ├─ Versi saat ini : $current_ver"
+                echo -e "  └─ Versi terbaru  : $latest_ver"
+            else
+                show_warning "Tool Sqlmap belum terinstall"
+            fi
+            ;;
+        "Zphisher")
+            if [ -d "zphisher" ]; then
+                cd zphisher
+                current_ver=$(git log -1 --pretty=format:"%h - %ad" --date=short)
+                latest_ver=$(git ls-remote --heads https://github.com/htr-tech/zphisher.git | grep "refs/heads/master" | cut -f 1)
+                cd ..
+                show_info "Zphisher"
+                echo -e "  ├─ Versi saat ini : $current_ver"
+                echo -e "  └─ Versi terbaru  : $latest_ver"
+            else
+                show_warning "Tool Zphisher belum terinstall"
+            fi
+            ;;
+        "Seeker")
+            if [ -d "seeker" ]; then
+                cd seeker
+                current_ver=$(git log -1 --pretty=format:"%h - %ad" --date=short)
+                latest_ver=$(git ls-remote --heads https://github.com/thewhiteh4t/seeker.git | grep "refs/heads/master" | cut -f 1)
+                cd ..
+                show_info "Seeker"
+                echo -e "  ├─ Versi saat ini : $current_ver"
+                echo -e "  └─ Versi terbaru  : $latest_ver"
+            else
+                show_warning "Tool Seeker belum terinstall"
+            fi
+            ;;
+        "Routersploit")
+            if [ -d "routersploit" ]; then
+                cd routersploit
+                current_ver=$(git log -1 --pretty=format:"%h - %ad" --date=short)
+                latest_ver=$(git ls-remote --heads https://github.com/threat9/routersploit.git | grep "refs/heads/master" | cut -f 1)
+                cd ..
+                show_info "Routersploit"
+                echo -e "  ├─ Versi saat ini : $current_ver"
+                echo -e "  └─ Versi terbaru  : $latest_ver"
+            else
+                show_warning "Tool Routersploit belum terinstall"
+            fi
+            ;;
+        "XSStrike")
+            if [ -d "XSStrike" ]; then
+                cd XSStrike
+                current_ver=$(git log -1 --pretty=format:"%h - %ad" --date=short)
+                latest_ver=$(git ls-remote --heads https://github.com/s0md3v/XSStrike.git | grep "refs/heads/master" | cut -f 1)
+                cd ..
+                show_info "XSStrike"
+                echo -e "  ├─ Versi saat ini : $current_ver"
+                echo -e "  └─ Versi terbaru  : $latest_ver"
+            else
+                show_warning "Tool XSStrike belum terinstall"
+            fi
+            ;;
+        "Cupp")
+            if [ -d "cupp" ]; then
+                cd cupp
+                current_ver=$(git log -1 --pretty=format:"%h - %ad" --date=short)
+                latest_ver=$(git ls-remote --heads https://github.com/Mebus/cupp.git | grep "refs/heads/master" | cut -f 1)
+                cd ..
+                show_info "Cupp"
+                echo -e "  ├─ Versi saat ini : $current_ver"
+                echo -e "  └─ Versi terbaru  : $latest_ver"
+            else
+                show_warning "Tool Cupp belum terinstall"
+            fi
+            ;;
+        *)
+            show_warning "Fitur cek versi belum tersedia untuk tool '$1' atau tool tidak valid"
+            echo -e "Tool yang didukung untuk cek versi:"
+            echo -e "  - Evil-Droid    - Metasploit"
+            echo -e "  - Sqlmap        - Zphisher"
+            echo -e "  - Seeker        - Routersploit"
+            echo -e "  - XSStrike      - Cupp"
+            ;;
+    esac
+}
+
+# Fungsi untuk update tool
+update_tool() {
+    echo -e "\n\e[1;36m╔════════════════════════════════════════╗"
+    echo -e "║            UPDATE TOOL                ║"
+    echo -e "╚════════════════════════════════════════╝\e[0m"
+    
+    case $1 in
+        "Evil-Droid")
+            if [ -d "evil-droid" ]; then
+                cd evil-droid
+                git pull origin master
+                cd ..
+                show_success "Evil-Droid telah diupdate"
+            else
+                show_warning "Evil-Droid belum terinstall, silakan install terlebih dahulu"
+            fi
+            ;;
+        "Metasploit")
+            if command -v msfupdate >/dev/null 2>&1; then
+                msfupdate
+                show_success "Metasploit telah diupdate"
+            else
+                show_warning "Metasploit belum terinstall, silakan install terlebih dahulu"
+            fi
+            ;;
+        "Sqlmap")
+            if [ -d "sqlmap" ]; then
+                cd sqlmap
+                git pull origin master
+                cd ..
+                show_success "Sqlmap telah diupdate"
+            else
+                show_warning "Sqlmap belum terinstall, silakan install terlebih dahulu"
+            fi
+            ;;
+        "Zphisher")
+            if [ -d "zphisher" ]; then
+                cd zphisher
+                git pull origin master
+                cd ..
+                show_success "Zphisher telah diupdate"
+            else
+                show_warning "Zphisher belum terinstall, silakan install terlebih dahulu"
+            fi
+            ;;
+        "Seeker")
+            if [ -d "seeker" ]; then
+                cd seeker
+                git pull origin master
+                cd ..
+                show_success "Seeker telah diupdate"
+            else
+                show_warning "Seeker belum terinstall, silakan install terlebih dahulu"
+            fi
+            ;;
+        "Routersploit")
+            if [ -d "routersploit" ]; then
+                cd routersploit
+                git pull origin master
+                pip install -r requirements.txt
+                cd ..
+                show_success "Routersploit telah diupdate"
+            else
+                show_warning "Routersploit belum terinstall, silakan install terlebih dahulu"
+            fi
+            ;;
+        "XSStrike")
+            if [ -d "XSStrike" ]; then
+                cd XSStrike
+                git pull origin master
+                pip3 install -r requirements.txt
+                cd ..
+                show_success "XSStrike telah diupdate"
+            else
+                show_warning "XSStrike belum terinstall, silakan install terlebih dahulu"
+            fi
+            ;;
+        "Cupp")
+            if [ -d "cupp" ]; then
+                cd cupp
+                git pull origin master
+                cd ..
+                show_success "Cupp telah diupdate"
+            else
+                show_warning "Cupp belum terinstall, silakan install terlebih dahulu"
+            fi
+            ;;
+        *)
+            show_warning "Fitur update belum tersedia untuk tool '$1' atau tool tidak valid"
+            echo -e "Tool yang didukung untuk update:"
+            echo -e "  - Evil-Droid    - Metasploit"
+            echo -e "  - Sqlmap        - Zphisher"
+            echo -e "  - Seeker        - Routersploit"
+            echo -e "  - XSStrike      - Cupp"
+            ;;
+    esac
+}
+
+# ASCII Art (T-HAX)
+display_banner() {
+    clear
+    echo -e "\e[1;34m
+▀▀█▀▀ ░░ █░░█ █▀▀█ █░█
+░▒█░░ ▀▀ █▀▀█ █▄▄█ ▄▀▄
+░▒█░░ ░░ ▀░░▀ ▀░░▀ ▀░▀
+\e[0m"
+    echo -e "\e[1;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\e[0m"
+    echo -e "\e[1;33m     Advanced Tool Installer by Ade12\e[0m"
+    echo -e "\e[1;32m     GitHub: https://github.com/HolyBytes\e[0m"
+    echo -e "\e[1;31m     Hak Cipta © $(date +'%Y') Ade12. All rights reserved.\e[0m"
+    echo -e "\e[1;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\e[0m"
+    echo ""
+
+    # Tampilkan tanggal dan waktu saat ini
+    echo -e "\e[1;36m📅 Tanggal: $(date +'%Y-%m-%d')\e[0m"
+    echo -e "\e[1;36m🕒 Waktu  : $(date +'%H:%M:%S')\e[0m"
+    echo ""
+}
+
+# Fungsi untuk menampilkan tabel
+show_table() {
+    echo -e "\e[1;36m╔══════════════════════════════════════════════════════════════════════════════════════════╗"
+    echo -e "║                                 DAFTAR TOOLS YANG TERSEDIA                               ║"
+    echo -e "╚══════════════════════════════════════════════════════════════════════════════════════════╝\e[0m"
+    echo -e "\e[1;37m┌────┬────────────────┬──────────────────────┬───────────────────────────────────────────┐"
+    echo -e "│\e[1;33m No \e[1;37m│\e[1;33m      Nama      \e[1;37m│\e[1;33m Ukuran (Perkiraan)   \e[1;37m│\e[1;33m Fungsi                                    \e[1;37m│"
+    echo -e "├────┼────────────────┼──────────────────────┼───────────────────────────────────────────┤"
+    echo -e "│\e[1;32m 1  \e[1;37m│\e[1;36m Seeker         \e[1;37m│\e[1;35m 10 MB                \e[1;37m│\e[1;37m Melacak lokasi GPS menggunakan link phishing\e[1;37m │"
+    echo -e "│\e[1;32m 2  \e[1;37m│\e[1;36m ngrok          \e[1;37m│\e[1;35m 15 MB                \e[1;37m│\e[1;37m Tunnel untuk mengekspose localhost         \e[1;37m │"
+    echo -e "│\e[1;32m 3  \e[1;37m│\e[1;36m Metasploit     \e[1;37m│\e[1;35m 1.5 GB               \e[1;37m│\e[1;37m Framework eksploitasi                     \e[1;37m │"
+    echo -e "│\e[1;32m 4  \e[1;37m│\e[1;36m Hydra          \e[1;37m│\e[1;35m 5 MB                 \e[1;37m│\e[1;37m Password cracking tool                     \e[1;37m │"
+    echo -e "│\e[1;32m 5  \e[1;37m│\e[1;36m Sqlmap         \e[1;37m│\e[1;35m 30 MB                \e[1;37m│\e[1;37m SQL injection automation tool              \e[1;37m │"
+    echo -e "│\e[1;32m 6  \e[1;37m│\e[1;36m Zphisher       \e[1;37m│\e[1;35m 20 MB                \e[1;37m│\e[1;37m Phishing tool                              \e[1;37m │"
+    echo -e "│\e[1;32m 7  \e[1;37m│\e[1;36m OpenSSH        \e[1;37m│\e[1;35m 5 MB                 \e[1;37m│\e[1;37m SSH client dan server                      \e[1;37m │"
+    echo -e "│\e[1;32m 8  \e[1;37m│\e[1;36m localhost.run  \e[1;37m│\e[1;35m (Service)            \e[1;37m│\e[1;37m Tunnel localhost                           \e[1;37m │"
+    echo -e "│\e[1;32m 9  \e[1;37m│\e[1;36m wget & curl    \e[1;37m│\e[1;35m 2 MB                 \e[1;37m│\e[1;37m Download manager                           \e[1;37m │"
+    echo -e "│\e[1;32m 10 \e[1;37m│\e[1;36m Nikto          \e[1;37m│\e[1;35m 10 MB                \e[1;37m│\e[1;37m Web server scanner                         \e[1;37m │"
+    echo -e "│\e[1;32m 11 \e[1;37m│\e[1;36m Sherlock       \e[1;37m│\e[1;35m 5 MB                 \e[1;37m│\e[1;37m Mencari username di sosial media           \e[1;37m │"
+    echo -e "│\e[1;32m 12 \e[1;37m│\e[1;36m TheHarvester   \e[1;37m│\e[1;35m 10 MB                \e[1;37m│\e[1;37m Mengumpulkan informasi email/subdomain     \e[1;37m │"
+    echo -e "│\e[1;32m 13 \e[1;37m│\e[1;36m Recon-ng       \e[1;37m│\e[1;35m 15 MB                \e[1;37m│\e[1;37m Framework reconnaisance web                \e[1;37m │"
+    echo -e "│\e[1;32m 14 \e[1;37m│\e[1;36m Dmitry         \e[1;37m│\e[1;35m 2 MB                 \e[1;37m│\e[1;37m Deepmagic information gathering tool       \e[1;37m │"
+    echo -e "│\e[1;32m 15 \e[1;37m│\e[1;36m Wpscan         \e[1;37m│\e[1;35m 20 MB                \e[1;37m│\e[1;37m WordPress vulnerability scanner            \e[1;37m │"
+    echo -e "│\e[1;32m 16 \e[1;37m│\e[1;36m XSStrike       \e[1;37m│\e[1;35m 15 MB                \e[1;37m│\e[1;37m Advanced XSS detection suite               \e[1;37m │"
+    echo -e "│\e[1;32m 17 \e[1;37m│\e[1;36m Crunch         \e[1;37m│\e[1;35m 2 MB                 \e[1;37m│\e[1;37m Wordlist generator                         \e[1;37m │"
+    echo -e "│\e[1;32m 18 \e[1;37m│\e[1;36m Cupp           \e[1;37m│\e[1;35m 1 MB                 \e[1;37m│\e[1;37m Another wordlist generator                 \e[1;37m │"
+    echo -e "│\e[1;32m 19 \e[1;37m│\e[1;36m Evil-Droid     \e[1;37m│\e[1;35m 50 MB                \e[1;37m│\e[1;37m Framework untuk membuat APK jahat          \e[1;37m │"
+    echo -e "│\e[1;32m 20 \e[1;37m│\e[1;36m Routersploit   \e[1;37m│\e[1;35m 30 MB                \e[1;37m│\e[1;37m Framework eksploitasi router               \e[1;37m │"
+    echo -e "│\e[1;32m 21 \e[1;37m│\e[1;36m Bettercap      \e[1;37m│\e[1;35m 20 MB                \e[1;37m│\e[1;37m Framework untuk serangan MITM              \e[1;37m │"
+    echo -e "│\e[1;32m 22 \e[1;37m│\e[1;36m Netdiscover    \e[1;37m│\e[1;35m 2 MB                 \e[1;37m│\e[1;37m Tool untuk scan jaringan ARP              \e[1;37m │"
+    echo -e "└────┴────────────────┴──────────────────────┴───────────────────────────────────────────┘\e[0m"
+}
+
+# Fungsi untuk menampilkan menu utama
+show_menu() {
+    echo -e "\n\e[1;35m╔════════════════════════════════════════╗"
+    echo -e "║              MENU UTAMA                ║"
+    echo -e "╚════════════════════════════════════════╝\e[0m"
+    echo -e "\e[1;37m┌────────────────────────────────────────┐"
+    echo -e "│  \e[1;32m1.\e[1;37m Install Tool                        │"
+    echo -e "│  \e[1;32m2.\e[1;37m Cek Versi Tool                      │"
+    echo -e "│  \e[1;32m3.\e[1;37m Update Tool                         │"
+    echo -e "│  \e[1;31m0.\e[1;37m Keluar                              │"
+    echo -e "└────────────────────────────────────────┘\e[0m"
+    echo ""
+}
+
+# Fungsi untuk menginstall tools
+install_tool() {
+    echo -e "\n\e[1;36m╔════════════════════════════════════════╗"
+    echo -e "║           INSTALL TOOL                ║"
+    echo -e "╚════════════════════════════════════════╝\e[0m"
+    
+    case $1 in
+        1) # Seeker
+            show_info "Menginstall Seeker..."
+            git clone https://github.com/thewhiteh4t/seeker.git
+            if [ $? -eq 0 ]; then
+                show_success "Seeker berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Seeker"
+            fi
+            ;;
+        2) # ngrok
+            show_info "Menginstall ngrok..."
+            wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+            unzip ngrok-stable-linux-amd64.zip
+            rm ngrok-stable-linux-amd64.zip
+            if [ -f "ngrok" ]; then
+                show_success "ngrok berhasil diinstall"
+            else
+                show_warning "Gagal menginstall ngrok"
+            fi
+            ;;
+        3) # Metasploit
+            show_info "Menginstall Metasploit Framework..."
+            curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+            chmod +x msfinstall
+            ./msfinstall
+            if command -v msfconsole >/dev/null 2>&1; then
+                show_success "Metasploit berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Metasploit"
+            fi
+            ;;
+        4) # Hydra
+            show_info "Menginstall Hydra..."
+            sudo apt-get install hydra -y
+            if command -v hydra >/dev/null 2>&1; then
+                show_success "Hydra berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Hydra"
+            fi
+            ;;
+        5) # Sqlmap
+            show_info "Menginstall Sqlmap..."
+            git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git
+            if [ -d "sqlmap" ]; then
+                show_success "Sqlmap berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Sqlmap"
+            fi
+            ;;
+        6) # Zphisher
+            show_info "Menginstall Zphisher..."
+            git clone https://github.com/htr-tech/zphisher
+            if [ -d "zphisher" ]; then
+                show_success "Zphisher berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Zphisher"
+            fi
+            ;;
+        7) # OpenSSH
+            show_info "Menginstall OpenSSH..."
+            sudo apt-get install openssh-server -y
+            if command -v ssh >/dev/null 2>&1; then
+                show_success "OpenSSH berhasil diinstall"
+            else
+                show_warning "Gagal menginstall OpenSSH"
+            fi
+            ;;
+        8) # localhost.run
+            show_info "localhost.run adalah layanan, tidak perlu diinstall."
+            echo -e "  \e[1;33m→ Gunakan perintah: ssh -R 80:localhost:8080 ssh.localhost.run\e[0m"
+            show_success "Informasi localhost.run berhasil ditampilkan"
+            ;;
+        9) # wget & curl
+            show_info "Menginstall wget & curl..."
+            sudo apt-get install wget curl -y
+            if command -v wget >/dev/null 2>&1 && command -v curl >/dev/null 2>&1; then
+                show_success "wget & curl berhasil diinstall"
+            else
+                show_warning "Gagal menginstall wget & curl"
+            fi
+            ;;
+        10) # Nikto
+            show_info "Menginstall Nikto..."
+            sudo apt-get install nikto -y
+            if command -v nikto >/dev/null 2>&1; then
+                show_success "Nikto berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Nikto"
+            fi
+            ;;
+        11) # Sherlock
+            show_info "Menginstall Sherlock..."
+            git clone https://github.com/sherlock-project/sherlock.git
+            cd sherlock
+            python3 -m pip install -r requirements.txt
+            cd ..
+            if [ -d "sherlock" ]; then
+                show_success "Sherlock berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Sherlock"
+            fi
+            ;;
+        12) # TheHarvester
+            show_info "Menginstall TheHarvester..."
+            sudo apt-get install theharvester -y
+            if command -v theharvester >/dev/null 2>&1; then
+                show_success "TheHarvester berhasil diinstall"
+            else
+                show_warning "Gagal menginstall TheHarvester"
+            fi
+            ;;
+        13) # Recon-ng
+            show_info "Menginstall Recon-ng..."
+            git clone https://github.com/lanmaster53/recon-ng.git
+            cd recon-ng
+            pip install -r REQUIREMENTS
+            cd ..
+            if [ -d "recon-ng" ]; then
+                show_success "Recon-ng berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Recon-ng"
+            fi
+            ;;
+        14) # Dmitry
+            show_info "Menginstall Dmitry..."
+            sudo apt-get install dmitry -y
+            if command -v dmitry >/dev/null 2>&1; then
+                show_success "Dmitry berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Dmitry"
+            fi
+            ;;
+        15) # Wpscan
+            show_info "Menginstall Wpscan..."
+            sudo apt-get install wpscan -y
+            if command -v wpscan >/dev/null 2>&1; then
+                show_success "Wpscan berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Wpscan"
+            fi
+            ;;
+        16) # XSStrike
+            show_info "Menginstall XSStrike..."
+            git clone https://github.com/s0md3v/XSStrike.git
+            cd XSStrike
+            pip3 install -r requirements.txt
+            cd ..
+            if [ -d "XSStrike" ]; then
+                show_success "XSStrike berhasil diinstall"
+            else
+                show_warning "Gagal menginstall XSStrike"
+            fi
+            ;;
+        17) # Crunch
+            show_info "Menginstall Crunch..."
+            sudo apt-get install crunch -y
+            if command -v crunch >/dev/null 2>&1; then
+                show_success "Crunch berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Crunch"
+            fi
+            ;;
+        18) # Cupp
+            show_info "Menginstall Cupp..."
+            git clone https://github.com/Mebus/cupp.git
+            if [ -d "cupp" ]; then
+                show_success "Cupp berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Cupp"
+            fi
+            ;;
+        19) # Evil-Droid
+            show_info "Menginstall Evil-Droid..."
+            git clone https://github.com/M4sc3r4n0/evil-droid.git
+            cd evil-droid
+            chmod +x evil-droid
+            cd ..
+            if [ -d "evil-droid" ]; then
+                show_success "Evil-Droid berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Evil-Droid"
+            fi
+            ;;
+        20) # Routersploit
+            show_info "Menginstall Routersploit..."
+            git clone https://github.com/threat9/routersploit
+            cd routersploit
+            pip install -r requirements.txt
+            cd ..
+            if [ -d "routersploit" ]; then
+                show_success "Routersploit berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Routersploit"
+            fi
+            ;;
+        21) # Bettercap
+            show_info "Menginstall Bettercap..."
+            sudo apt-get install bettercap -y
+            if command -v bettercap >/dev/null 2>&1; then
+                show_success "Bettercap berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Bettercap"
+            fi
+            ;;
+        22) # Netdiscover
+            show_info "Menginstall Netdiscover..."
+            sudo apt-get install netdiscover -y
+            if command -v netdiscover >/dev/null 2>&1; then
+                show_success "Netdiscover berhasil diinstall"
+            else
+                show_warning "Gagal menginstall Netdiscover"
+            fi
+            ;;
+               *)
+            show_warning "Pilihan tidak valid! Silakan masukkan angka antara 1-22."
+            ;;
+    esac
+}
+
+# Fungsi utama
+main() {
+    # Buat log file jika belum ada
+    touch installer.log
+    echo "$(get_timestamp) ===== Memulai T-HAX Installer =====" >> installer.log
+
+    while true; do
+        display_banner
+        show_table
+        show_menu
+
+        read -p $'\e[1;32mPilih menu [0-3]: \e[0m' menu_choice
+
+        case $menu_choice in
+            1) # Install Tool
+                display_banner
+                show_table
+                read -p $'\e[1;32mPilih tool yang akan diinstall [1-22]: \e[0m' tool_choice
+                install_tool $tool_choice
+                ;;
+            2) # Cek Versi Tool
+                display_banner
+                echo -e "\n\e[1;36mDaftar Tool yang bisa dicek versi:\e[0m"
+                echo -e "1. Evil-Droid     4. Zphisher      7. XSStrike"
+                echo -e "2. Metasploit     5. Seeker        8. Cupp"
+                echo -e "3. Sqlmap         6. Routersploit"
+                read -p $'\e[1;32mMasukkan nama tool (atau nomor): \e[0m' tool_name
+                
+                # Konversi angka ke nama tool jika perlu
+                case $tool_name in
+                    1) tool_name="Evil-Droid" ;;
+                    2) tool_name="Metasploit" ;;
+                    3) tool_name="Sqlmap" ;;
+                    4) tool_name="Zphisher" ;;
+                    5) tool_name="Seeker" ;;
+                    6) tool_name="Routersploit" ;;
+                    7) tool_name="XSStrike" ;;
+                    8) tool_name="Cupp" ;;
+                esac
+                
+                check_version "$tool_name"
+                ;;
+            3) # Update Tool
+                display_banner
+                echo -e "\n\e[1;36mDaftar Tool yang bisa diupdate:\e[0m"
+                echo -e "1. Evil-Droid     4. Zphisher      7. XSStrike"
+                echo -e "2. Metasploit     5. Seeker        8. Cupp"
+                echo -e "3. Sqlmap         6. Routersploit"
+                read -p $'\e[1;32mMasukkan nama tool (atau nomor): \e[0m' tool_name
+                
+                # Konversi angka ke nama tool jika perlu
+                case $tool_name in
+                    1) tool_name="Evil-Droid" ;;
+                    2) tool_name="Metasploit" ;;
+                    3) tool_name="Sqlmap" ;;
+                    4) tool_name="Zphisher" ;;
+                    5) tool_name="Seeker" ;;
+                    6) tool_name="Routersploit" ;;
+                    7) tool_name="XSStrike" ;;
+                    8) tool_name="Cupp" ;;
+                esac
+                
+                update_tool "$tool_name"
+                ;;
+            0) # Keluar
+                echo -e "\n\e[1;32mTerima kasih telah menggunakan T-HAX Installer!\e[0m"
+                echo "$(get_timestamp) ===== Keluar dari T-HAX Installer =====" >> installer.log
+                exit 0
+                ;;
+            *)
+                show_warning "Pilihan tidak valid! Silakan pilih 0-3."
+                ;;
+        esac
+
+        read -p $'\e[1;33mTekan Enter untuk melanjutkan...\e[0m'
+    done
+}
+
+# Jalankan fungsi utama
+main
