@@ -1,80 +1,158 @@
-# **T-HAX Advanced Tool Installer**  
+# 📱 Panduan Super Gampang Pakai T-HAX Advanced Tool Installer
 
-**🔗 GitHub Repository:** [https://github.com/HolyBytes/T-HAX.git](https://github.com/HolyBytes/T-HAX.git)  
-**📂 Script Location:** `T-HAX/t-hax.id`  
+## ⚠️ PERINGATAN DULU YA, GAES!
+* **Tools ini CUMA buat belajar dan pentesting legal aja ya!** Jangan aneh-aneh 🚫
+* Beberapa tools perlu **akses root** (`sudo`), jadi siap-siap aja
+* Pastiin HP/komputer kamu udah ada **Git, Python, sama PIP** sebelum mulai
 
----
+## 🔗 Info Penting
+* **GitHub**: [https://github.com/HolyBytes/T-HAX.git](https://github.com/HolyBytes/T-HAX.git)
+* **Script**: `T-HAX/t-hax.id`
+* **Pembuat**: Ade12
+* **Lisensi**: © 2023 - All Rights Reserved
 
-## **📌 Deskripsi**  
-**T-HAX Advanced Tool Installer** adalah sebuah script Bash yang memudahkan pengguna untuk menginstall, mengupdate, dan mengelola berbagai tools keamanan siber dan penetration testing secara otomatis. Script ini dirancang oleh **Ade12** dan dikembangkan di bawah repositori **HolyBytes**.  
+## 📋 Daftar Tools Kece yang Bisa Dipasang
 
-Dengan antarmuka yang interaktif, pengguna dapat memilih tools yang ingin diinstall, mengecek versi terbaru, serta melakukan update dengan mudah. Script ini juga menyediakan informasi detail tentang setiap tool, termasuk ukuran file dan fungsinya.  
+| No | Nama Tool | Ukuran | Buat Apa? |
+|----|-----------|--------|-----------|
+| 1 | Seeker | 10 MB | Ngelacak GPS lewat link phishing |
+| 2 | ngrok | 15 MB | Bikin localhost kebuka di internet |
+| 3 | Metasploit | 1.5 GB | Framework exploitasi lengkap |
+| 4 | Hydra | 5 MB | Nge-crack password |
+| 5 | ... | ... | ... |
+| 19 | Evil-Droid | 50 MB | Bikin APK jahat buat testing |
+| 20 | Routersploit | 30 MB | Exploit router-router |
+| 21 | Bettercap | 20 MB | Framework serangan MITM |
+| 22 | Netdiscover | 2 MB | Scanner jaringan ARP |
 
----
+## 🚀 Cara Pasang T-HAX (Step by Step)
 
-## **✨ Fitur Utama**  
-✅ **Daftar Tools Lengkap** – Menginstall lebih dari 20 tools hacking & security seperti:  
-- **Metasploit, Sqlmap, Hydra, Wpscan, Evil-Droid, Routersploit, Bettercap, Netdiscover**, dan banyak lagi.  
+### 1️⃣ Persiapan Dulu, Bro/Sis!
 
-✅ **Fitur Cek Versi** – Memeriksa apakah tool sudah terinstall dan versi terbarunya.  
-✅ **Auto-Update** – Memperbarui tool yang sudah terinstall ke versi terbaru.  
-✅ **Logging System** – Mencatat semua aktivitas installasi dalam file log.  
-✅ **Tampilan User-Friendly** – Dilengkapi dengan **ASCII art, tabel informasi, dan warna** untuk pengalaman yang lebih baik.  
-✅ **Informasi Waktu Real-Time** – Menampilkan tanggal, bulan, tahun, jam, menit, dan detik saat script dijalankan.  
-✅ **Peringatan & Pesan Informasi** – Memberikan notifikasi jika terjadi kesalahan atau proses berhasil.  
+**Update dulu Termux/Linux kamu:**
+```bash
+pkg update && pkg upgrade -y
+```
+*Kalau pake Linux, ketik aja `sudo apt update && sudo apt upgrade -y` atau `sudo pacman -Syu` tergantung Linux kamu apa*
 
----
+**Pasang Git biar bisa download:**
+```bash
+pkg install git -y
+```
+*Terus cek udah bener belum:*
+```bash
+git --version
+```
 
-## **📋 Daftar Tools yang Tersedia**  
-| No  | Nama Tool       | Ukuran (Perkiraan) | Fungsi Utama |
-|-----|----------------|-------------------|--------------|
-| 1   | Seeker         | 10 MB             | GPS Tracking via Phishing Link |
-| 2   | ngrok          | 15 MB             | Expose Localhost to Internet |
-| 3   | Metasploit     | 1.5 GB            | Exploitation Framework |
-| 4   | Hydra          | 5 MB              | Password Cracking |
-| ... | ...            | ...               | ... |
-| 19  | Evil-Droid     | 50 MB             | Malicious APK Builder |
-| 20  | Routersploit   | 30 MB             | Router Exploitation |
-| 21  | Bettercap      | 20 MB             | MITM Attack Framework |
-| 22  | Netdiscover    | 2 MB              | ARP Network Scanner |
+**Pasang Python & PIP:**
+```bash
+pkg install python -y
+```
+*Cek juga ya:*
+```bash
+python --version
+pip --version
+```
 
----
+**Pasang tools pendukung:**
+```bash
+pkg install wget curl unzip -y
+```
 
-## **⚙️ Cara Penggunaan**  
-1. **Clone Repository**  
-   ```bash
-   git clone https://github.com/HolyBytes/T-HAX.git
-   cd T-HAX
-   ```
-2. **Beri Permission**  
-   ```bash
-   chmod +x t-hax.id
-   ```
-3. **Jalankan Script**  
-   ```bash
-   sudo ./t-hax.id
-   ```
-4. **Pilih Menu**  
-   - Install Tool  
-   - Cek Versi Tool  
-   - Update Tool  
-   - Keluar  
+### 2️⃣ Download & Jalanin T-HAX
 
----
+**Ambil scriptnya dari GitHub:**
+```bash
+git clone https://github.com/HolyBytes/T-HAX.git
+cd T-HAX
+```
 
-## **⚠️ Peringatan**  
-- **Hanya untuk tujuan edukasi dan penetration testing yang legal!**  
-- Beberapa tools memerlukan **akses root** (`sudo`).  
-- Pastikan sistem Anda sudah terinstall **Git, Python, dan PIP** sebelum menjalankan script.  
+**Kasih izin buat dijalanin:**
+```bash
+chmod +x t-hax.id
+```
 
----
+**Gas jalanin:**
+```bash
+./t-hax.id
+```
+*Kalau butuh root di Linux, pake `sudo ./t-hax.id`*
 
-## **📜 License**  
-**© 2023 Ade12 - HolyBytes**  
-**All Rights Reserved.**  
+## 🛠️ Kalau Ada Error, Jangan Panik!
 
-🔗 **GitHub:** [https://github.com/HolyBytes](https://github.com/HolyBytes)  
+### ❌ Muncul "Missing Dependencies"?
+Beberapa tools butuh paket tambahan.
 
----
+Misalnya buat Metasploit:
+```bash
+pkg install ruby -y
+gem install bundler
+```
 
-Dengan **T-HAX Advanced Tool Installer**, proses installasi tools hacking menjadi lebih cepat dan efisien! 🚀
+Kalau pip ngambek soal setuptools:
+```bash
+pip install --upgrade setuptools
+```
+
+### ❌ Error "No Internet Connection"?
+Cek koneksi dulu:
+```bash
+ping google.com
+```
+*Kalau perintah `ping` gak ada:*
+```bash
+pkg install inetutils -y
+```
+
+### ❌ Error "Storage Full"?
+Beberapa tools (kayak Metasploit) makan banyak tempat.
+
+Bersihin cache:
+```bash
+pkg clean
+```
+
+Cek storage:
+```bash
+df -h
+```
+
+### ❌ Error "Permission Denied"?
+Kalau scriptnya gak mau jalan:
+
+Pastiin udah ngasih izin:
+```bash
+chmod +x t-hax.id
+```
+
+Masih gak bisa? Coba:
+```bash
+bash t-hax.id
+```
+
+## 💡 Tips Jitu!
+
+**Kalau download lelet, ganti mirror Termux:**
+```bash
+termux-change-repo
+```
+(Pilih mirror kayak `Grimler` atau `BFSU`)
+
+**HP gak di-root? Pake Proot Distro aja:**
+```bash
+pkg install proot-distro -y
+proot-distro install ubuntu
+proot-distro login ubuntu
+```
+(Terus jalanin script di Ubuntu)
+
+**Mau liat log installasi?**
+```bash
+cat installer.log
+```
+
+## 🎉 Akhir Kata
+
+T-HAX dibuat supaya kamu bisa install tools hacking dengan cepat dan gampang. **INGET YA, pake buat belajar aja, jangan iseng sama orang lain!**
+
+**🚀 Selamat Mencoba dan Happy Hacking!**
