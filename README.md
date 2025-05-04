@@ -1,5 +1,19 @@
 # 📱 Panduan Super Gampang Pakai T-HAX Advanced Tool Installer
 
+## 📌 Deskripsi
+**T-HAX Advanced Tool Installer** adalah script Bash keren yang bikin kamu gampang install, update, dan kelola berbagai tools keamanan siber dan pentesting secara otomatis. Dibikin sama **Ade12** dan dikembangin di bawah repositori **HolyBytes**.
+
+Antarmukanya interaktif banget! Kamu tinggal pilih tools yang mau dipasang, cek versi terbaru, dan update dengan gampang. Ada juga info detail tentang setiap tool, termasuk ukuran file dan fungsinya.
+
+### ✨ Fitur-Fitur Kece
+✅ **Daftar Tools Lengkap** – Install lebih dari 20 tools hacking & security
+✅ **Fitur Cek Versi** – Ngecek tool udah terpasang atau belum dan versi terbarunya
+✅ **Auto-Update** – Update tool yang udah terpasang ke versi terbaru
+✅ **Logging System** – Nyimpen semua aktivitas installasi di file log
+✅ **Tampilan User-Friendly** – Dilengkapi ASCII art, tabel info, dan warna biar makin keren
+✅ **Informasi Waktu Real-Time** – Nunjukin tanggal, bulan, tahun, jam, menit, dan detik
+✅ **Peringatan & Pesan Info** – Kasih notifikasi kalo ada error atau proses sukses
+
 ## ⚠️ PERINGATAN DULU YA, GAES!
 * **Tools ini CUMA buat belajar dan pentesting legal aja ya!** Jangan aneh-aneh 🚫
 * Beberapa tools perlu **akses root** (`sudo`), jadi siap-siap aja
