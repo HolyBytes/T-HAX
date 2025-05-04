@@ -1,0 +1,285 @@
+#!/bin/bash
+
+# Fungsi untuk mendapatkan timestamp
+get_timestamp() {
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')]"
+}
+
+# Fungsi untuk menampilkan pesan peringatan
+show_warning() {
+    echo -e "\e[1;31m[!] PERINGATAN: $1\e[0m"
+    echo "$(get_timestamp) WARNING: $1" >> installer.log
+}
+
+# Fungsi untuk menampilkan pesan informasi
+show_info() {
+    echo -e "\e[1;34m[i] INFO: $1\e[0m"
+    echo "$(get_timestamp) INFO: $1" >> installer.log
+}
+
+# Fungsi untuk mengecek versi tool
+check_version() {
+    case $1 in
+        "Evil-Droid")
+            if [ -d "evil-droid" ]; then
+                cd evil-droid
+                current_ver=$(git log -1 --format=%cd --date=short)
+                latest_ver=$(git ls-remote --heads https://github.com/M4sc3r4n0/evil-droid.git | grep "refs/heads/master" | cut -f 1)
+                cd ..
+                echo "Versi saat ini: $current_ver"
+                echo "Versi terbaru: $latest_ver"
+            else
+                echo "Tool belum terinstall"
+            fi
+            ;;
+        "Routersploit")
+            if command -v rsf >/dev/null 2>&1; then
+                current_ver=$(rsf --version | head -n 1)
+                echo "Versi saat ini: $current_ver"
+                echo "Cek versi terbaru di: https://github.com/threat9/routersploit"
+            else
+                echo "Tool belum terinstall"
+            fi
+            ;;
+        *)
+            echo "Fitur cek versi belum tersedia untuk tool ini"
+            ;;
+    esac
+}
+
+# Fungsi untuk update tool
+update_tool() {
+    case $1 in
+        "Evil-Droid")
+            if [ -d "evil-droid" ]; then
+                cd evil-droid
+                git pull origin master
+                cd ..
+                show_info "Evil-Droid telah diupdate"
+            else
+                show_warning "Evil-Droid belum terinstall, silakan install terlebih dahulu"
+            fi
+            ;;
+        "Routersploit")
+            if command -v rsf >/dev/null 2>&1; then
+                pip install --upgrade routersploit
+                show_info "Routersploit telah diupdate"
+            else
+                show_warning "Routersploit belum terinstall, silakan install terlebih dahulu"
+            fi
+            ;;
+        *)
+            show_warning "Fitur update belum tersedia untuk tool ini"
+            ;;
+    esac
+}
+
+# ASCII Art
+echo -e "\e[1;34m
+   ___    _  _______     __
+  / _ \  / |/ / ___/  __/ /____
+ / // / /    / /__| |/ / __/ _ \\
+/____/ /_/|_\___/|___/\__/\___/
+\e[0m"
+echo -e "\e[1;33mAdvanced Tool Installer by Ade12\e[0m"
+echo -e "\e[1;32mGitHub: https://github.com/HolyBytes\e[0m"
+echo -e "\e[1;31mHak Cipta © $(date +'%Y') Ade12. All rights reserved.\e[0m"
+echo ""
+
+# Tampilkan tanggal dan waktu saat ini
+echo -e "\e[1;36mTanggal: $(date +'%Y-%m-%d')\e[0m"
+echo -e "\e[1;36mWaktu: $(date +'%H:%M:%S')\e[0m"
+echo ""
+
+# Fungsi untuk menampilkan tabel
+show_table() {
+    echo -e "\e[1;36mDaftar Tools yang Tersedia:\e[0m"
+    echo "+----+----------------+----------------------+-----------------------------------------------+"
+    echo "| No |      Nama      | Ukuran (Perkiraan)   | Fungsi                                        |"
+    echo "+----+----------------+----------------------+-----------------------------------------------+"
+    echo "| 1  | Seeker         | 10 MB                | Melacak lokasi GPS menggunakan link phishing  |"
+    echo "| 2  | ngrok          | 15 MB                | Tunnel untuk mengekspose localhost ke internet|"
+    echo "| 3  | Metasploit     | 1.5 GB               | Framework eksploitasi                         |"
+    echo "| 4  | Hydra          | 5 MB                 | Password cracking tool                        |"
+    echo "| 5  | Sqlmap         | 30 MB                | SQL injection automation tool                 |"
+    echo "| 6  | Zphisher       | 20 MB                | Phishing tool                                 |"
+    echo "| 7  | OpenSSH        | 5 MB                 | SSH client dan server                        |"
+    echo "| 8  | localhost.run  | (Service)            | Tunnel localhost                              |"
+    echo "| 9  | wget & curl    | 2 MB                 | Download manager                              |"
+    echo "| 10 | Nikto          | 10 MB                | Web server scanner                            |"
+    echo "| 11 | Sherlock       | 5 MB                 | Mencari username di sosial media              |"
+    echo "| 12 | TheHarvester   | 10 MB                | Mengumpulkan informasi email/subdomain        |"
+    echo "| 13 | Recon-ng       | 15 MB                | Framework reconnaisance web                   |"
+    echo "| 14 | Dmitry         | 2 MB                 | Deepmagic information gathering tool          |"
+    echo "| 15 | Wpscan         | 20 MB                | WordPress vulnerability scanner               |"
+    echo "| 16 | XSStrike       | 15 MB                | Advanced XSS detection and exploitation suite |"
+    echo "| 17 | Crunch         | 2 MB                 | Wordlist generator                            |"
+    echo "| 18 | Cupp           | 1 MB                 | Another wordlist generator                    |"
+    echo "| 19 | Evil-Droid     | 50 MB                | Framework untuk membuat APK jahat            |"
+    echo "| 20 | Routersploit   | 30 MB                | Framework eksploitasi router                  |"
+    echo "| 21 | Bettercap      | 20 MB                | Framework untuk serangan MITM                 |"
+    echo "| 22 | Netdiscover    | 2 MB                 | Tool untuk scan jaringan ARP                 |"
+    echo "+----+----------------+----------------------+-----------------------------------------------+"
+    echo -e "\e[1;33mHak Cipta © $(date +'%Y') Ade12. All rights reserved.\e[0m"
+    echo ""
+}
+
+# Fungsi untuk menginstall tools
+install_tool() {
+    case $1 in
+        1) # Seeker
+            echo "Menginstall Seeker..."
+            git clone https://github.com/thewhiteh4t/seeker.git
+            ;;
+        2) # ngrok
+            echo "Menginstall ngrok..."
+            wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+            unzip ngrok-stable-linux-amd64.zip
+            rm ngrok-stable-linux-amd64.zip
+            ;;
+        3) # Metasploit
+            echo "Menginstall Metasploit Framework..."
+            curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+            chmod +x msfinstall
+            ./msfinstall
+            ;;
+        4) # Hydra
+            echo "Menginstall Hydra..."
+            sudo apt-get install hydra -y
+            ;;
+        5) # Sqlmap
+            echo "Menginstall Sqlmap..."
+            git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git
+            ;;
+        6) # Zphisher
+            echo "Menginstall Zphisher..."
+            git clone https://github.com/htr-tech/zphisher
+            ;;
+        7) # OpenSSH
+            echo "Menginstall OpenSSH..."
+            sudo apt-get install openssh-server -y
+            ;;
+        8) # localhost.run
+            echo "localhost.run adalah layanan, tidak perlu diinstall."
+            echo "Gunakan perintah: ssh -R 80:localhost:8080 ssh.localhost.run"
+            ;;
+        9) # wget & curl
+            echo "Menginstall wget & curl..."
+            sudo apt-get install wget curl -y
+            ;;
+        10) # Nikto
+            echo "Menginstall Nikto..."
+            sudo apt-get install nikto -y
+            ;;
+        11) # Sherlock
+            echo "Menginstall Sherlock..."
+            git clone https://github.com/sherlock-project/sherlock.git
+            cd sherlock
+            python3 -m pip install -r requirements.txt
+            cd ..
+            ;;
+        12) # TheHarvester
+            echo "Menginstall TheHarvester..."
+            sudo apt-get install theharvester -y
+            ;;
+        13) # Recon-ng
+            echo "Menginstall Recon-ng..."
+            git clone https://github.com/lanmaster53/recon-ng.git
+            cd recon-ng
+            pip install -r REQUIREMENTS
+            cd ..
+            ;;
+        14) # Dmitry
+            echo "Menginstall Dmitry..."
+            sudo apt-get install dmitry -y
+            ;;
+        15) # Wpscan
+            echo "Menginstall Wpscan..."
+            sudo apt-get install wpscan -y
+            ;;
+        16) # XSStrike
+            echo "Menginstall XSStrike..."
+            git clone https://github.com/s0md3v/XSStrike.git
+            cd XSStrike
+            pip3 install -r requirements.txt
+            cd ..
+            ;;
+        17) # Crunch
+            echo "Menginstall Crunch..."
+            sudo apt-get install crunch -y
+            ;;
+        18) # Cupp
+            echo "Menginstall Cupp..."
+            git clone https://github.com/Mebus/cupp.git
+            ;;
+        19) # Evil-Droid
+            echo "Menginstall Evil-Droid..."
+            git clone https://github.com/M4sc3r4n0/evil-droid.git
+            cd evil-droid
+            chmod +x evil-droid
+            cd ..
+            ;;
+        20) # Routersploit
+            echo "Menginstall Routersploit..."
+            git clone https://github.com/threat9/routersploit
+            cd routersploit
+            pip install -r requirements.txt
+            cd ..
+            ;;
+        21) # Bettercap
+            echo "Menginstall Bettercap..."
+            sudo apt-get install bettercap -y
+            ;;
+        22) # Netdiscover
+            echo "Menginstall Netdiscover..."
+            sudo apt-get install netdiscover -y
+            ;;
+        *)
+            echo "Pilihan tidak valid!"
+            ;;
+    esac
+}
+
+# Main program
+while true; do
+    show_table
+    echo -e "\e[1;35mMenu Utama:\e[0m"
+    echo "1. Install Tool"
+    echo "2. Cek Versi Tool"
+    echo "3. Update Tool"
+    echo "0. Keluar"
+    
+    read -p "Pilih menu (0-3): " main_choice
+    
+    case $main_choice in
+        1) # Install Tool
+            read -p "Masukkan nomor tool yang ingin diinstall (1-22): " choice
+            if [ "$choice" -ge 1 ] && [ "$choice" -le 22 ] 2>/dev/null; then
+                install_tool $choice
+                echo -e "\e[1;32mInstallasi selesai!\e[0m"
+                echo ""
+            else
+                show_warning "Input tidak valid! Silakan masukkan angka antara 1-22."
+            fi
+            ;;
+        2) # Cek Versi
+            read -p "Masukkan nama tool yang ingin dicek versinya: " tool_name
+            check_version "$tool_name"
+            ;;
+        3) # Update Tool
+            read -p "Masukkan nama tool yang ingin diupdate: " tool_name
+            update_tool "$tool_name"
+            ;;
+        0) # Keluar
+            echo "Keluar..."
+            exit 0
+            ;;
+        *)
+            show_warning "Pilihan tidak valid!"
+            ;;
+    esac
+    
+    echo ""
+    read -p "Tekan Enter untuk melanjutkan..."
+    clear
+done
